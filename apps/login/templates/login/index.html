@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>Travel Buddy</title>
+  </head>
+
+  <body>
+    	<h2>Travel Buddy</h2>
+      <form action="{% url 'login_login' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Username" required="required" />
+        <input type="password" name="password" placeholder="Password" required="required" />
+        <input type="submit" value="Let me in!">
+      </form>
+      <p>New? <a href="{% url 'login_register' %}">Become a travel buddy.</a></p>
+      {% if messages %}
+      <ul>
+        <p>Attention:{% for message in messages %} {{ message }}  {% endfor %}</p>
+      </ul>
+      {% endif %}
+
+
+        	<h1>Register</h1>
+        <form action="{% url 'login_registration' %}" method="POST">
+        {% csrf_token %}
+          <input type="text" name="name" placeholder="Name" required="required" />
+      	  <input type="text" name="username" placeholder="Username" required="required" />
+          <p><small>Password should contain at least 8 characters</small></p>
+          <input type="password" name="password" placeholder="Password" required="required" />
+          <input type="password" name="confirm_password" placeholder="Confirm Password" required="required" />
+          <input type="submit" value="Join!">
+      </form>
+      <p>Already a Travel Buddy? <a href="{% url 'login_index' %}">Log In</a></p>
+       {% if messages %}
+        <ul>
+            <p id="listerror">Attention: {% for message in messages %} {{ message }}  {% endfor %} </p>
+        </ul>
+      {% endif %}
+     
+  </body>
+</html>

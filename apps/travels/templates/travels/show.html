@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Destination</title>
+    </head>
+    <body>
+
+            <form action="{% url 'login_index' %}" method="post">
+             {% csrf_token %}
+            <input type="submit" value="Home">
+                </form>
+
+                <form action="{% url 'login_logout' %}" method="post">
+                 {% csrf_token %}
+                 <input type="submit" value="Logout">
+                 </form>
+                 
+            <h1>Travel Buddy</h1>
+            <h3>{{travel.destination}}</h3>
+            <ul>
+             <li>Description: {{travel.description}}</li>
+              <li>Travel Date From: {{travel.travel_date_from}}</li>
+               <li>Travel Date To: {{travel.travel_date_to}}</li>
+                </ul>
+            <h4>Other Travel Buddies</h4>
+            <ul>
+             {% for person in travel.travelmaker_id.all  %}
+             {% if person.name != travel.travelplanner_id.name %}
+             <li> {{person.name}} </li>
+              {% endif %}
+              {% endfor %}
+             </ul>
+
+    </body>
+</html>

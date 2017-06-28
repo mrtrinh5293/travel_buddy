@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Travel Dashboard</title>
+        <meta name="description" content="Travel Dashboard for Travel Buddy">
+    </head>
+    <body>
+                        <form action="{% url 'login_logout' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="submit" value="Logout">
+                        </form>
+            <h1>Travel Buddy</h1>
+            <h3>Hello, {{ loggedin.name }}!</h3>
+            <h4>Your Trip Schedules</h4>
+            <table>
+                <tr>
+                    <th>Destination</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Plan</th>
+                </tr>
+                {% for travel in loggedin.travelplanner.all %}
+                <tr>
+                    <td><a href="{% url 'travels_show' id=travel.id%}">{{ travel.destination }}</a></td>
+                    <td>{{ travel.travel_date_from }}</td>
+                    <td>{{ travel.travel_date_to }}</td>
+                    <td>{{ travel.description }}</td>
+                    
+                </tr>
+                {% endfor %}
+                {% for travel in loggedin.travelmaker.all  %}
+                <tr>
+                    <td><a href="{% url 'travels_show' id=travel.id%}">{{ travel.destination }}
+                    </a></td>
+                    <td>{{ travel.travel_date_from }}</td>
+                    <td>{{ travel.travel_date_to }}</td>
+                    <td>{{ travel.description }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+                    <form action="{% url 'travels_create' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="Add Travel Plan">
+                    </form>
+
+            <h4>Others <span aria-hidden="true"></span></h4>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Destination</th>
+                    <th>Travel Start Date</th>
+                    <th>Travel End Date</th>
+                    <th>Action</th>
+                </tr>
+                {% for travel in trips_off %}
+                <tr>
+                    <td>{{ travel.travelplanner_id.name }}</td>
+                    <td><a href="{% url 'travels_show' id=travel.id%}">{{ travel.destination }}</td>
+                    <td>{{ travel.travel_date_from }}</td>
+                    <td>{{ travel.travel_date_to }}</td>
+                    <td><form action="{% url 'travels_join' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="destination" value="{{ travel.id}}">
+                    <input type="hidden" name="traveler" value="{{ loggedin.id }}">
+                    <input type="submit" value="Join">
+                    </form></td>
+                </tr>
+                {% endfor %}
+            </table>
+
+
+            
+    </body>
+</html>

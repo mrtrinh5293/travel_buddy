@@ -6,28 +6,8 @@ from datetime import date, datetime
 from dateutil.parser import parse as parse_date
 
 class TravelManager(models.Manager):
-    def ValidTravelPlanned(self, userInfo, request):
+    def ValidTravelPlanned(self, user_info, request):
         passFlag = True
-        if len(userInfo['destination']) < 1:
-            messages.warning(request, 'Destination field left blank.')
-            passFlag = False
-        if len(userInfo['description']) < 1:
-            messages.warning(request, 'Description field left blank.')
-            passFlag = False
-
-        unicode_text_from = userInfo['travel_date_from']
-        from_date = parse_date(unicode_text_from)
-        if from_date.date() < date.today():
-            messages.warning(request, 'Travel from date cannot be in the past.')
-            passFlag = False
-        unicode_text_to = userInfo['travel_date_to']
-        to_date = parse_date(unicode_text_to)
-
-        if passFlag:
-            logged_in = request.session['logged_in']
-            travelplanner = User.objects.get(id=logged_in)
-            travelmaker = User.objects.get(id=logged_in)
-            travel = self.create(destination = userInfo['destination'], description = userInfo['description'], travel_date_from = userInfo['travel_date_from'], travel_date_to = userInfo['travel_date_to'], travelplanner_id = travelplanner)
         return passFlag
 
 class Travel(models.Model):

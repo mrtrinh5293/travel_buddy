@@ -40,7 +40,3 @@ def join(request):
         travelplans.travelmaker_id.add(traveler)
         travelplans.save()
         return redirect(reverse('login_travels', kwargs={'id':request.session['logged_in']}))
-
-# def remove(request, id):
-#     Travel.objects.get(id=id).delete()
-#     return redirect(reverse('login_travels', kwargs={'id':request.session['logged_in']}))
